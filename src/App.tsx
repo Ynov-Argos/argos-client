@@ -4,7 +4,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
 import DefaultDashboard from './pages/Dashboard/Default.tsx';
-
+import LogIn from './pages/Authentication/LogIn.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -33,6 +33,8 @@ function App() {
             </>
           }
         />
+
+        <Route path="/auth/login" element={<> <PageTitle title="ARGOS - Login" /> <LogIn /> </>}></Route>
       </Routes>
     </>
   );
