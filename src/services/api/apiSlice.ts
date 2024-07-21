@@ -7,9 +7,9 @@ import {
 import { logOut } from '../auth/AuthSlice.ts';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: '/api',
-  credentials: 'include',
+  baseUrl: 'http://localhost:3000/api',
   prepareHeaders: (headers, { getState }) => {
+    /* @ts-ignore */
     const token = getState().auth.token;
     if (token) {
       headers.set('authorization', `Bearer ${token}`);
@@ -31,5 +31,6 @@ const baseQueryWithReAuth = async (args: string | FetchArgs, api: BaseQueryApi, 
 
 export const apiSlice = createApi({
   baseQuery: baseQueryWithReAuth,
+  /* @ts-ignore */
   endpoints: builder => ({})
   });
