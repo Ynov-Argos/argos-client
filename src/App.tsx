@@ -10,6 +10,12 @@ import RequireAuth from './services/auth/RequireAuth.tsx';
 import User from './pages/User/User.tsx';
 import UserList from './pages/User/UserList.tsx';
 
+import Client from './pages/Client/Client.tsx';
+import ClientList from './pages/Client/ListClient.tsx';
+
+import ClientForm from './components/Forms/Client/ClientForm.tsx';
+
+
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
@@ -34,8 +40,36 @@ function App() {
             <Route path='' element={<> <PageTitle title='ARGOS' /> <DefaultDashboard/> </>}></Route>
             <Route path='/user/:id' element={<> <PageTitle title='ARGOS - User' /> <User/> </>}></Route>
             <Route path='/user/list' element={<> <PageTitle title='ARGOS - User' /> <UserList/> </>}></Route>
+            <Route
+          path="/"
+          element={
+            <>
+              <PageTitle title="ARGOS" />
+              <DefaultDashboard />
+            </>
+          }
+        />
+         <Route
+          path="/client"
+          element={
+            <>
+              <PageTitle title="ARGOS CLIENT" />
+              <Client />
+            </>
+          }
+        />
+        <Route
+          path="/clientListe"
+          element={
+            <>
+              <PageTitle title="ARGOS CLIENT Liste" />
+              <ClientList />
+            </>
+          }
+        />
           </Route>
         </Route>
+        
       </Routes>
     </>
   );
