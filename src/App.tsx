@@ -3,7 +3,11 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 
 import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
-import DefaultDashboard from './pages/Dashboard/Default.tsx';
+import Client from './pages/Client/Client.tsx';
+import ClientList from './pages/Client/ListClient.tsx';
+
+import DefaultDashboard from './pages/Dashboard/DefaultDashboard.tsx';
+import ClientForm from './components/Forms/Client/ClientForm.tsx';
 
 
 function App() {
@@ -30,6 +34,24 @@ function App() {
             <>
               <PageTitle title="ARGOS" />
               <DefaultDashboard />
+            </>
+          }
+        />
+         <Route
+          path="/client"
+          element={
+            <>
+              <PageTitle title="ARGOS CLIENT" />
+              <Client />
+            </>
+          }
+        />
+        <Route
+          path="/clientListe"
+          element={
+            <>
+              <PageTitle title="ARGOS CLIENT Liste" />
+              <ClientList />
             </>
           }
         />
