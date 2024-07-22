@@ -34,7 +34,7 @@ const User: React.FC = () => {
   return isLoading ? (<Loader></Loader>) : (<DefaultLayout>
     <div>
       <h1>Hello User n°{id}</h1>
-      <UserForm isNewUser={isNewUser}></UserForm>
+      <UserForm isNewUser={isNewUser} user={user}></UserForm>
     </div>
   </DefaultLayout>)
 }

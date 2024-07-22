@@ -2,7 +2,7 @@ import CreateUserForm from './CreateUserForm.tsx';
 import UpdatePasswordForm from './UpdatePasswordForm.tsx';
 import UpdateUserForm from './UpdateUserForm.tsx';
 
-type UserFormProps = { isNewUser: boolean; };
+type UserFormProps = { isNewUser: boolean; user: { id: string; name: string; email: string; role: string; } | undefined };
 const UserForm = (props: UserFormProps) => {
 
   if (props.isNewUser) {
