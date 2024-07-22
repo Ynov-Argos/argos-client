@@ -14,34 +14,34 @@ export const userApiSlice = apiSlice.injectEndpoints({
         method: 'GET'
       })
     }),
-    updatePassword: builder.query({
+    updatePassword: builder.mutation({
       query: (data: { oldPassword: string, newPassword: string }) => ({
         url: '/user/update-password',
         method: 'PUT',
         body: { ...data }
       })
     }),
-    createUser: builder.query({
+    createUser: builder.mutation({
       query: (data: { email: string, password: string, name: string, role: string }) => ({
         url: '/user',
         method: 'POST',
         body: { ...data }
       })
     }),
-    updateUser: builder.query({
+    updateUser: builder.mutation({
       query: (data: { email: string, name: string, role: string }) => ({
         url: '/user',
         method: 'PUT',
         body: { ...data }
       })
     }),
-    deactivateUser: builder.query({
+    deactivateUser: builder.mutation({
       query: (userId: string) => ({
         url: `/user/deactivate/${userId}`,
         method: 'PUT'
       })
     }),
-    activateUser: builder.query({
+    activateUser: builder.mutation({
       query: (userId: string) => ({
         url: `/user/activate/${userId}`,
         method: 'PUT'
@@ -53,10 +53,10 @@ export const userApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetUserQuery,
   useGetUsersQuery,
-  useUpdatePasswordQuery,
-  useCreateUserQuery,
-  useUpdateUserQuery,
-  useDeactivateUserQuery,
-  useActivateUserQuery
+  useUpdatePasswordMutation,
+  useCreateUserMutation,
+  useUpdateUserMutation,
+  useDeactivateUserMutation,
+  useActivateUserMutation
 } = userApiSlice;
 
