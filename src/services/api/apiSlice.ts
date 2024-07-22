@@ -8,9 +8,9 @@ import { logOut } from '../auth/AuthSlice.ts';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: 'http://localhost:3000/api',
-  prepareHeaders: (headers, { getState }) => {
+  prepareHeaders: (headers, {}) => {
     /* @ts-ignore */
-    const token = getState().auth.token;
+    const token = localStorage.getItem('token');
     if (token) {
       headers.set('authorization', `Bearer ${token}`);
     }
