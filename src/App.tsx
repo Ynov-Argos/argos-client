@@ -7,6 +7,7 @@ import DefaultDashboard from './pages/Dashboard/Default.tsx';
 import LogIn from './pages/Authentication/LogIn.tsx';
 import Layout from './layout/Layout.tsx';
 import RequireAuth from './services/auth/RequireAuth.tsx';
+import User from './pages/User/User.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -30,6 +31,7 @@ function App() {
           {/* private routes */}
           <Route element={<RequireAuth />}>
             <Route path='' element={<> <PageTitle title='ARGOS' /> <DefaultDashboard/> </>}></Route>
+            <Route path='/user/:id' element={<> <PageTitle title='ARGOS - User' /> <User/> </>}></Route>
           </Route>
         </Route>
       </Routes>
