@@ -8,11 +8,11 @@ const CreateUserForm: React.FC = () => {
   const [role, setRole] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  const roleOptions = [{value: 'ADMIN', label: 'Admin'}, {value: 'STAFF', label: 'Staff'}];
 
   return (
     <div className="">
       <div className="flex flex-col gap-9">
-        {/* <!-- Contact Form 2 --> */}
         <div
           className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
@@ -70,17 +70,22 @@ const CreateUserForm: React.FC = () => {
                 </div>
               </div>
 
-              <SelectGroupDropdown />
+              <div className="mb-5.5">
+                <label className="mb-3 block text-sm font-medium text-black dark:text-white"> Rôle </label>
+                <SelectGroupDropdown options={roleOptions} dropdownTitle={''} />
+              </div>
 
-              <button
-                className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
-                Créer l'utilisateur
-              </button>
-            </div>
+
+                <button
+                  className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
+                  Créer l'utilisateur
+                </button>
+              </div>
           </form>
         </div>
       </div>
-    </div>);
+    </div>
+);
 };
 
 export default CreateUserForm;
