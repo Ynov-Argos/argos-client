@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import SelectGroupDropdown from '../SelectGroupDropdown.tsx';
+import { useCreateUserMutation } from '../../../services/user/UserApiSlice.ts';
 
 const CreateUserForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -8,7 +9,30 @@ const CreateUserForm: React.FC = () => {
   const [role, setRole] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  const [createUser] = useCreateUserMutation();
+
   const roleOptions = [{value: 'ADMIN', label: 'Admin'}, {value: 'STAFF', label: 'Staff'}];
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log('submitting');
+    if (password !== confirmPassword) {
+      console.log('passwords do not match');
+      return;
+    }
+    const user = { email, name, password, role };
+    try {
+      const data = await createUser(user).unwrap();
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleNameInput = (e) => { setName(e.target.value); };
+  const handleEmailInput = (e) => { setEmail(e.target.value); };
+  const handlePasswordInput = (e) => { setPassword(e.target.value); };
+  const handleConfirmPasswordInput = (e) => { setConfirmPassword(e.target.value); };
 
   return (
     <div className="">
@@ -20,7 +44,8 @@ const CreateUserForm: React.FC = () => {
               Nouvel Utilisateur
             </h3>
           </div>
-          <form action="#">
+
+          <form onSubmit={handleSubmit}>
             <div className="p-6.5">
               <div className="mb-5 flex flex-col gap-6 xl:flex-row">
                 <div className="w-full xl:w-1/2">
@@ -29,6 +54,8 @@ const CreateUserForm: React.FC = () => {
                   </label>
                   <input
                     type="text"
+                    value={name}
+                    onChange={handleNameInput}
                     placeholder="Nom & Prénom"
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
@@ -40,6 +67,8 @@ const CreateUserForm: React.FC = () => {
                   </label>
                   <input
                     type="email"
+                    value={email}
+                    onChange={handleEmailInput}
                     placeholder="yourmail@gmail.com"
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
@@ -53,6 +82,8 @@ const CreateUserForm: React.FC = () => {
                   </label>
                   <input
                     type="password"
+                    value={password}
+                    onChange={handlePasswordInput}
                     placeholder="Mot de passe"
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
@@ -64,6 +95,8 @@ const CreateUserForm: React.FC = () => {
                   </label>
                   <input
                     type="password"
+                    value={confirmPassword}
+                    onChange={handleConfirmPasswordInput}
                     placeholder="Confirmer le mot de passe"
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
@@ -72,7 +105,7 @@ const CreateUserForm: React.FC = () => {
 
               <div className="mb-5.5">
                 <label className="mb-3 block text-sm font-medium text-black dark:text-white"> Rôle </label>
-                <SelectGroupDropdown options={roleOptions} dropdownTitle={''} />
+                <SelectGroupDropdown options={roleOptions} dropdownTitle={''} setSelectedOption={setRole} selectedOption={role}/>
               </div>
 
 

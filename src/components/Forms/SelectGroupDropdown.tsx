@@ -1,20 +1,6 @@
 import React, { useState } from 'react';
 
-interface Options {
-  value: string;
-  label: string;
-}
-
-interface SelectGroupDropdownProps {
-  dropdownTitle: string;
-  options: Options[];
-}
-
-const SelectGroupDropdown: React.FC<SelectGroupDropdownProps> = ({
-                                                                   dropdownTitle,
-                                                                   options
-                                                                 }) => {
-  const [selectedOption, setSelectedOption] = useState<string>('');
+const SelectGroupDropdown: React.FC<any> = ({ dropdownTitle, options, setSelectedOption, selectedOption }) => {
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
 
   const changeTextColor = () => {
