@@ -9,7 +9,7 @@ const UserForm = (props: UserFormProps) => {
     return (<div><CreateUserForm></CreateUserForm></div>);
   }
   return (
-    <div>
+    <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
       <UpdateUserForm></UpdateUserForm>
       <UpdatePasswordForm></UpdatePasswordForm>
     </div>);
