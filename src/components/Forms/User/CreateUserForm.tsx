@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import SelectGroupDropdown from '../SelectGroupDropdown.tsx';
 import { useCreateUserMutation } from '../../../services/user/UserApiSlice.ts';
 
@@ -15,17 +17,23 @@ const CreateUserForm: React.FC = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('submitting');
     if (password !== confirmPassword) {
       console.log('passwords do not match');
       return;
     }
     const user = { email, name, password, role };
+    console.log(user);
     try {
       const data = await createUser(user).unwrap();
       console.log(data);
     } catch (err) {
       console.log(err);
+      if (err.data.statusCode === 400) {
+        toast.error("L'e-mail est déjà utilisé");
+      } else {
+        toast.error(`Error: ${err.data.message}`);
+
+      }
     }
   };
 
@@ -117,6 +125,7 @@ const CreateUserForm: React.FC = () => {
           </form>
         </div>
       </div>
+      <ToastContainer/>
     </div>
 );
 };
