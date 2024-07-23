@@ -1,6 +1,19 @@
 import React, { useState } from 'react';
 
-const SelectGroupDropdown: React.FC = () => {
+interface Options {
+  value: string;
+  label: string;
+}
+
+interface SelectGroupDropdownProps {
+  dropdownTitle: string;
+  options: Options[];
+}
+
+const SelectGroupDropdown: React.FC<SelectGroupDropdownProps> = ({
+                                                                   dropdownTitle,
+                                                                   options
+                                                                 }) => {
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
 
@@ -9,44 +22,33 @@ const SelectGroupDropdown: React.FC = () => {
   };
 
   return (
-    <div className="mb-5.5">
-      <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-        {' '}
-        Which option best describes you?{' '}
-      </label>
 
-      <div className="relative z-20 bg-transparent dark:bg-form-input">
-        <select
-          value={selectedOption}
-          onChange={(e) => {
-            setSelectedOption(e.target.value);
-            changeTextColor();
-          }}
-          className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent px-5 py-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary ${
-            isOptionSelected ? 'text-black dark:text-white' : ''
-          }`}
-        >
-          <option value="" disabled className="text-body dark:text-bodydark">
-            Select your subject
-          </option>
-          <option value="Student" className="text-body dark:text-bodydark">
-            Student
-          </option>
+    <div className="relative z-20 bg-transparent dark:bg-form-input">
+      <select
+        value={selectedOption}
+        onChange={(e) => {
+          setSelectedOption(e.target.value);
+          changeTextColor();
+        }}
+        className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent px-5 py-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary ${
+          isOptionSelected ? 'text-black dark:text-white' : ''
+        }`}
+      >
+        <option value="" disabled className="text-body dark:text-bodydark">
+          {dropdownTitle}
+        </option>
+        {options.map((option) => (
           <option
-            value="UX/UI Designer"
+            value={option.value}
+            key={option.value}
             className="text-body dark:text-bodydark"
           >
-            UX/UI Designer
+            {option.label}
           </option>
-          <option
-            value="Web Developer"
-            className="text-body dark:text-bodydark"
-          >
-            Web Developer
-          </option>
-        </select>
+        ))}
+      </select>
 
-        <span className="absolute right-4 top-1/2 z-30 -translate-y-1/2">
+      <span className="absolute right-4 top-1/2 z-30 -translate-y-1/2">
           <svg
             className="fill-current"
             width="24"
@@ -65,7 +67,6 @@ const SelectGroupDropdown: React.FC = () => {
             </g>
           </svg>
         </span>
-      </div>
     </div>
   );
 };
