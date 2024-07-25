@@ -13,7 +13,6 @@ const updateUserForm = ({user}) => {
   const roleOptions = [{value: 'ADMIN', label: 'Admin'}, {value: 'STAFF', label: 'Staff'}];
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(user.id);
     const userToUpdate = {userId: user.id, name, email, role};
     try {
       const data = await updateUser(userToUpdate).unwrap();
@@ -21,7 +20,6 @@ const updateUserForm = ({user}) => {
       setEmail(data?.email);
       setRole(data?.role);
     } catch (err) {
-      console.error(err);
       if (err.data.statusCode === 404) {
         toast.error('Utilisateur inexistant');
       } else {
