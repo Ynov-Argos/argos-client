@@ -18,7 +18,7 @@ const CreateUserForm: React.FC = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      console.log('passwords do not match');
+      toast.error('Les mots de passes ne correspondent pas')
       return;
     }
     const user = { email, name, password, role };

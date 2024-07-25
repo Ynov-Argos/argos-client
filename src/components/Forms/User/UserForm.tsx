@@ -10,7 +10,7 @@ const UserForm = (props: UserFormProps) => {
   }
   return (
     <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
-      <UpdateUserForm></UpdateUserForm>
+      <UpdateUserForm user={props.user}></UpdateUserForm>
       <UpdatePasswordForm></UpdatePasswordForm>
     </div>);
 };
