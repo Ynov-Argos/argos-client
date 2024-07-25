@@ -1,4 +1,18 @@
-const updateUserForm = () => {
+import { useState } from 'react';
+import SelectGroupDropdown from '../SelectGroupDropdown.tsx';
+
+const updateUserForm = ({user}) => {
+  const [name, setName] = useState(user?.name || '');
+  const [email, setEmail] = useState(user?.email || '');
+  const [role, setRole] = useState(user?.role || '');
+
+  const roleOptions = [{value: 'ADMIN', label: 'Admin'}, {value: 'STAFF', label: 'Staff'}];
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(user);
+    console.warn('Submit');
+  }
+
   return (
     <div className="flex flex-col gap-9">
       {/* <!-- Contact Form 2 --> */}
@@ -6,30 +20,34 @@ const updateUserForm = () => {
         className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
           <h3 className="font-medium text-black dark:text-white">
-            Contact Form 2
+            Modifier l'utilsateur
           </h3>
         </div>
-        <form action="#">
+        <form onSubmit={handleSubmit}>
           <div className="p-6.5">
             <div className="mb-5 flex flex-col gap-6 xl:flex-row">
               <div className="w-full xl:w-1/2">
                 <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                  First name
+                  Nom & Prénom
                 </label>
                 <input
                   type="text"
-                  placeholder="Enter your first name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Nom & Prénom"
                   className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 />
               </div>
 
               <div className="w-full xl:w-1/2">
                 <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                  Last name
+                  Email
                 </label>
                 <input
-                  type="text"
-                  placeholder="Enter your last name"
+                  type="email"
+                  value={email}
+                  onChange={(e) => {setEmail(e.target.value)}}
+                  placeholder="Email"
                   className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 />
               </div>
@@ -47,27 +65,12 @@ const updateUserForm = () => {
                 />
               </div>
 
-              <div className="w-full xl:w-1/2">
-                <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                  Phone
-                </label>
-                <input
-                  type="text"
-                  placeholder="(321) 5555-0115"
-                  className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                />
+              <div className="mb-5.5">
+                <label
+                  className="mb-3 block text-sm font-medium text-black dark:text-white"> Rôle </label>
+                <SelectGroupDropdown options={roleOptions} dropdownTitle={''}
+                                     setSelectedOption={setRole} selectedOption={role} />
               </div>
-            </div>
-
-            <div className="mb-6">
-              <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                Message
-              </label>
-              <textarea
-                rows={6}
-                placeholder="Type your message"
-                className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-              ></textarea>
             </div>
 
             <button
