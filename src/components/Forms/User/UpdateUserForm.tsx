@@ -68,7 +68,7 @@ const updateUserForm = ({user}) => {
               </div>
             </div>
 
-            <div className="mb-5.5 flex flex-col gap-6 xl:flex-row">
+            <div className="w-full">
               <div className="mb-5.5">
                 <label
                   className="mb-3 block text-sm font-medium text-black dark:text-white"> Rôle </label>
