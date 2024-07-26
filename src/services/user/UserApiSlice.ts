@@ -11,8 +11,8 @@ export const userApiSlice = apiSlice.injectEndpoints({
     getUsers: builder.query({
       query: () => ({
         url: '/user',
-        method: 'GET'
-      })
+      }),
+      keepUnusedDataFor: 60
     }),
     updatePassword: builder.mutation({
       query: (data: { userId: string, oldPassword: string, newPassword: string }) => ({
