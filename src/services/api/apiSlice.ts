@@ -24,6 +24,7 @@ const baseQueryWithReAuth = async (args: string | FetchArgs, api: BaseQueryApi, 
   if (result.error?.status === 401) {
     // TODO - re-authenticate with refresh token
     api.dispatch(logOut());
+    window.location.reload();
   }
 
   return result;

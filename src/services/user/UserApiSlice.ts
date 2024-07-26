@@ -15,10 +15,10 @@ export const userApiSlice = apiSlice.injectEndpoints({
       })
     }),
     updatePassword: builder.mutation({
-      query: (data: { oldPassword: string, newPassword: string }) => ({
-        url: '/user/update-password',
+      query: (data: { userId: string, oldPassword: string, newPassword: string }) => ({
+        url: `/user/update-password/${data.userId}`,
         method: 'PUT',
-        body: { ...data }
+        body: { oldPassword: data.oldPassword, newPassword: data.newPassword }
       })
     }),
     createUser: builder.mutation({
@@ -29,10 +29,10 @@ export const userApiSlice = apiSlice.injectEndpoints({
       })
     }),
     updateUser: builder.mutation({
-      query: (data: { email: string, name: string, role: string }) => ({
-        url: '/user',
+      query: (data: { userId: string, email: string, name: string, role: string }) => ({
+        url: `/user/${data.userId}`,
         method: 'PUT',
-        body: { ...data }
+        body: { name: data.name, email: data.email, role: data.role }
       })
     }),
     deactivateUser: builder.mutation({
