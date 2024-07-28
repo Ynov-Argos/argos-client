@@ -1,5 +1,7 @@
 const ClientForm =() =>{
     return(
+      <form>
+
         <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
         <div className="flex flex-col gap-9">
           {/* <!-- Contact Form --> */}
@@ -9,7 +11,6 @@ const ClientForm =() =>{
                 Création d'un client 
               </h3>
             </div>
-            <form action ="#">
               <div className="p-6.5">
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                 <div className="w-full xl:w-1/2">
@@ -203,6 +204,7 @@ const ClientForm =() =>{
 
                 
               </div>
+<<<<<<< HEAD
             </form>
           </div>
         </div>
@@ -210,6 +212,11 @@ const ClientForm =() =>{
 
           
           </div>
+=======
+              </form>
+            
+         
+>>>>>>> 6b2e34e0ea403bfe0e0816ebbcbc6e317de089cd
     );
 };
 export default ClientForm;
