@@ -39,6 +39,8 @@ function App() {
             <Route path='' element={<> <PageTitle title='ARGOS' /> <DefaultDashboard/> </>}></Route>
             <Route path='/user/:id' element={<> <PageTitle title='ARGOS - User' /> <User/> </>}></Route>
             <Route path='/user/list' element={<> <PageTitle title='ARGOS - User' /> <UserList/> </>}></Route>
+            </Route>
+
             <Route
           path="/"
           element={
@@ -67,7 +69,6 @@ function App() {
           }
         />
           </Route>
-        </Route>
         
       </Routes>
     </>
