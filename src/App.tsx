@@ -9,8 +9,9 @@ import Layout from './layout/Layout.tsx';
 import RequireAuth from './services/auth/RequireAuth.tsx';
 import User from './pages/User/User.tsx';
 import UserList from './pages/User/UserList.tsx';
-
 import Client from './pages/Client/Client.tsx';
+import CreateClient from './pages/Client/CreateClient.tsx';
+
 import ClientList from './pages/Client/ListClient.tsx';
 
 
@@ -27,49 +28,29 @@ function App() {
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
-  return loading ? (<Loader />) : (
+  return loading ? (
+    <Loader />
+  ) : (
     <>
       <Routes>
-        <Route path='/' element={<Layout/>}>
+        <Route path='/' element={<Layout />}>
           {/* public routes */}
-          <Route path='login' element={<> <PageTitle title="ARGOS - Login" /> <LogIn /> </>}></Route>
+          <Route path='login' element={<><PageTitle title="ARGOS - Login" /><LogIn /></>} />
 
           {/* private routes */}
           <Route element={<RequireAuth />}>
-            <Route path='' element={<> <PageTitle title='ARGOS' /> <DefaultDashboard/> </>}></Route>
-            <Route path='/user/:id' element={<> <PageTitle title='ARGOS - User' /> <User/> </>}></Route>
-            <Route path='/user/list' element={<> <PageTitle title='ARGOS - User' /> <UserList/> </>}></Route>
-            </Route>
-
-            <Route
-          path="/"
-          element={
-            <>
-              <PageTitle title="ARGOS" />
-              <DefaultDashboard />
-            </>
-          }
-        />
-         <Route
-          path="/client"
-          element={
-            <>
-              <PageTitle title="ARGOS CLIENT" />
-              <Client />
-            </>
-          }
-        />
-        <Route
-          path="/clientListe"
-          element={
-            <>
-              <PageTitle title="ARGOS CLIENT Liste" />
-              <ClientList />
-            </>
-          }
-        />
+            <Route path='' element={<><PageTitle title='ARGOS' /><DefaultDashboard /></>} />
+            <Route path='user/:id' element={<><PageTitle title='ARGOS - User' /><User /></>} />
+            <Route path='user/list' element={<><PageTitle title='ARGOS - User' /><UserList /></>} />
           </Route>
-        
+
+           {/* For debug route, temporarily off private routes */}
+          <Route path='client' element={<><PageTitle title='ARGOS - CLIENT' /><CreateClient /></>} />
+          {/* Need to do */}
+
+          <Route path='client/:id' element={<><PageTitle title='ARGOS - CLIENT' /><Client /></>} /> 
+          <Route path='client/list' element={<><PageTitle title='ARGOS - CLIENT' /><ClientList /></>} />
+        </Route>
       </Routes>
     </>
   );
