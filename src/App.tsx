@@ -10,7 +10,6 @@ import RequireAuth from './services/auth/RequireAuth.tsx';
 import User from './pages/User/User.tsx';
 import UserList from './pages/User/UserList.tsx';
 import Client from './pages/Client/Client.tsx';
-import CreateClient from './pages/Client/CreateClient.tsx';
 
 import ClientList from './pages/Client/ListClient.tsx';
 
@@ -45,10 +44,9 @@ function App() {
           </Route>
 
            {/* For debug route, temporarily off private routes */}
-          <Route path='client' element={<><PageTitle title='ARGOS - CLIENT' /><CreateClient /></>} />
+          <Route path='client/:id' element={<><PageTitle title='ARGOS - CLIENT' /><Client /></>} />
           {/* Need to do */}
 
-          <Route path='client/:id' element={<><PageTitle title='ARGOS - CLIENT' /><Client /></>} /> 
           <Route path='client/list' element={<><PageTitle title='ARGOS - CLIENT' /><ClientList /></>} />
         </Route>
       </Routes>
