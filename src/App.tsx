@@ -48,6 +48,7 @@ function App() {
           {/* Need to do */}
 
           <Route path='client/list' element={<><PageTitle title='ARGOS - CLIENT' /><ClientList /></>} />
+          <Route path='Accueil' element={<><PageTitle title='ARGOS - Accueil' /><ClientList /></>} />
         </Route>
       </Routes>
     </>
