@@ -1,7 +1,7 @@
 import React from 'react';
 import CreateClientForm from './CreateClientForm.tsx';
-//import UpdateClientForm from './UpdateClientForm.tsx';
-//import UpdateClientAddressForm from './UpdateClientAddressForm.tsx';
+import UpdateClientForm from './UpdateClientForm.tsx';
+import UpdateClientAddressForm from './UpdateClientAddressForm.tsx';
 
 type Client = {
   id: string;
@@ -39,8 +39,8 @@ const ClientForm: React.FC<ClientFormProps> = ({ isNewClient, client }) => {
   }
   return (
     <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
-      <UpdateClientForm client={client} />
-      <UpdateClientAddressForm clientId={client?.id} />
+      {client && <UpdateClientForm client={client} />}
+      {client && <UpdateClientAddressForm clientId={client.id} initialAddressData={client} />}
     </div>
   );
 };

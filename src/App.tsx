@@ -11,7 +11,7 @@ import User from './pages/User/User.tsx';
 import UserList from './pages/User/UserList.tsx';
 import Client from './pages/Client/Client.tsx';
 
-import ClientList from './pages/Client/ListClient.tsx';
+import ClientList from './pages/Client/ClientList.tsx';
 
 
 
@@ -41,13 +41,9 @@ function App() {
             <Route path='' element={<><PageTitle title='ARGOS' /><DefaultDashboard /></>} />
             <Route path='user/:id' element={<><PageTitle title='ARGOS - User' /><User /></>} />
             <Route path='user/list' element={<><PageTitle title='ARGOS - User' /><UserList /></>} />
-          </Route>
-
-           {/* For debug route, temporarily off private routes */}
-          <Route path='client/:id' element={<><PageTitle title='ARGOS - CLIENT' /><Client /></>} />
-          {/* Need to do */}
-
-          <Route path='client/list' element={<><PageTitle title='ARGOS - CLIENT' /><ClientList /></>} />
+            <Route path='client/:id' element={<><PageTitle title='ARGOS - CLIENT' /><Client /></>} />
+            <Route path='client/list' element={<><PageTitle title='ARGOS - CLIENT' /><ClientList /></>} />
+          </Route>          
         </Route>
       </Routes>
     </>
