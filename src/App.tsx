@@ -9,6 +9,8 @@ import Layout from './layout/Layout.tsx';
 import RequireAuth from './services/auth/RequireAuth.tsx';
 import User from './pages/User/User.tsx';
 import UserList from './pages/User/UserList.tsx';
+import OneTimeSearch from './pages/OneTimeSearch/OneTimeSearch.tsx';
+import OneTimeSearchResult from './pages/OneTimeSearch/OneTimeSearchResult.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -34,6 +36,8 @@ function App() {
             <Route path='' element={<> <PageTitle title='ARGOS' /> <DefaultDashboard/> </>}></Route>
             <Route path='/user/:id' element={<> <PageTitle title='ARGOS - User' /> <User/> </>}></Route>
             <Route path='/user/list' element={<> <PageTitle title='ARGOS - User' /> <UserList/> </>}></Route>
+            <Route path='/one-time-search' element={<> <PageTitle title='ARGOS - Recherche Unique' /> <OneTimeSearch/> </>}></Route>
+            <Route path='/one-time-search/:id' element={<> <PageTitle title='ARGOS - Résultat de la recherche' /> <OneTimeSearchResult/> </>}></Route>
           </Route>
         </Route>
       </Routes>
