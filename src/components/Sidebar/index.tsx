@@ -159,7 +159,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               MATCHING
             </h3>
 
-            <ul className="mb-6 flex flex-col gap-1.5"></ul>
+            <ul className="mb-6 flex flex-col gap-1.5">
+              <li>
+                <NavLink
+                  to="/one-time-search"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('one-time-search') && 'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  Recherche Unique
+                </NavLink>
+              </li>
+            </ul>
           </div>
 
           {/* <!-- Settings Group --> */}
@@ -171,7 +182,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             <ul className="mb-6 flex flex-col gap-1.5">
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === '/' || pathname.includes('dashboard')
+                  pathname === '/user' || pathname.includes('user')
                 }
               >
                 {(handleClick, open) => {

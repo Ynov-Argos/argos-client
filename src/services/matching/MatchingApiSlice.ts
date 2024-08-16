@@ -9,7 +9,7 @@ export const matchingApiSlice = apiSlice.injectEndpoints({
         body: data
       })
     }),
-    getOneTimeSearchHistory: builder.query({
+    getOneTimeSearchs: builder.query({
       query: () => ({
         url: '/matching/one-time-search',
         method: 'GET'
@@ -26,6 +26,6 @@ export const matchingApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useSendOneTimeSearchRequestMutation,
-  useGetOneTimeSearchHistoryQuery,
+  useGetOneTimeSearchsQuery,
   useGetOneTimeSearchResultQuery
 } = matchingApiSlice;
