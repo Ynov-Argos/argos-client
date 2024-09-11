@@ -21,11 +21,19 @@ export const matchingApiSlice = apiSlice.injectEndpoints({
         method: 'GET'
       })
     }),
+    getEntity: builder.query({
+      query: (entityId: string) => ({
+        url: `/matching/entity/${entityId}`,
+        method: 'GET'
+      }),
+      keepUnusedDataFor: 1000 * 60 * 5, // 5 minutes
+    }),
   })
 });
 
 export const {
   useSendOneTimeSearchRequestMutation,
   useGetOneTimeSearchsQuery,
-  useGetOneTimeSearchResultQuery
+  useGetOneTimeSearchResultQuery,
+  useGetEntityQuery,
 } = matchingApiSlice;

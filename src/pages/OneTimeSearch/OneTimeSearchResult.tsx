@@ -1,5 +1,5 @@
 import DefaultLayout from '../../layout/DefaultLayout.tsx';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useGetOneTimeSearchResultQuery } from '../../services/matching/MatchingApiSlice.ts';
 import Loader from '../../common/Loader';
 import DataTable from '../../components/DataTables/DataTable.tsx';
@@ -11,6 +11,8 @@ const OneTimeSearchResult: React.FC = () => {
     isLoading,
     isError,
   } = useGetOneTimeSearchResultQuery(id);
+
+  const navigate = useNavigate();
 
   const natureOptions = [
     {
@@ -75,6 +77,10 @@ const OneTimeSearchResult: React.FC = () => {
     return new Date(date).toLocaleDateString('fr-FR', {});
   };
 
+  const handleOnClick = (row) => {
+    navigate('/matching/entity/' + row.registreId);
+  };
+
   return isLoading ? (<Loader></Loader>) : isError ? (<div>Error</div>) : (
     <DefaultLayout>
       <div
@@ -112,7 +118,7 @@ const OneTimeSearchResult: React.FC = () => {
         </div>
       </div>
       <div className='mt-4'>
-        <DataTable column={columns(searchResult)} rows={rows(searchResult.searchResult)} handleOnClick={() => {console.log('Click')}} />
+        <DataTable column={columns(searchResult)} rows={rows(searchResult.searchResult)} handleOnClick={handleOnClick} />
       </div>
     </DefaultLayout>);
 };
