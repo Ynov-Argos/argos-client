@@ -12,8 +12,9 @@ import UserList from './pages/User/UserList.tsx';
 import Client from './pages/Client/Client.tsx';
 
 import ClientList from './pages/Client/ClientList.tsx';
-
-
+import OneTimeSearch from './pages/OneTimeSearch/OneTimeSearch.tsx';
+import OneTimeSearchResult from './pages/OneTimeSearch/OneTimeSearchResult.tsx';
+import EntityDetails from './pages/Matching/EntityDetails.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -38,12 +39,15 @@ function App() {
 
           {/* private routes */}
           <Route element={<RequireAuth />}>
-            <Route path='' element={<><PageTitle title='ARGOS' /><DefaultDashboard /></>} />
-            <Route path='user/:id' element={<><PageTitle title='ARGOS - User' /><User /></>} />
-            <Route path='user/list' element={<><PageTitle title='ARGOS - User' /><UserList /></>} />
+            <Route path='' element={<> <PageTitle title='ARGOS' /> <DefaultDashboard/> </>}></Route>
+            <Route path='/user/:id' element={<> <PageTitle title='ARGOS - User' /> <User/> </>}></Route>
+            <Route path='/user/list' element={<> <PageTitle title='ARGOS - User' /> <UserList/> </>}></Route>
+            <Route path='/one-time-search' element={<> <PageTitle title='ARGOS - Recherche Unique' /> <OneTimeSearch/> </>}></Route>
+            <Route path='/one-time-search/:id' element={<> <PageTitle title='ARGOS - Résultat de la recherche' /> <OneTimeSearchResult/> </>}></Route>
+            <Route path='/matching/entity/:id' element={<> <PageTitle title={'ARGOS - Détail Gel des Avoirs'}/> <EntityDetails/></>}></Route>
             <Route path='client/:id' element={<><PageTitle title='ARGOS - CLIENT' /><Client /></>} />
             <Route path='client/list' element={<><PageTitle title='ARGOS - CLIENT' /><ClientList /></>} />
-          </Route>          
+          </Route>
         </Route>
       </Routes>
     </>
