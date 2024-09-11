@@ -15,9 +15,6 @@ const EntityDetails: React.FC = () => {
   const {
     data: entity,
     isLoading,
-    isError,
-    isSuccess,
-    error
   } = useGetEntityQuery(id);
 
   return isLoading ? (<Loader></Loader>) : (<>
