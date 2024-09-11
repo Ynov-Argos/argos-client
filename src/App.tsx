@@ -9,6 +9,9 @@ import Layout from './layout/Layout.tsx';
 import RequireAuth from './services/auth/RequireAuth.tsx';
 import User from './pages/User/User.tsx';
 import UserList from './pages/User/UserList.tsx';
+import Client from './pages/Client/Client.tsx';
+
+import ClientList from './pages/Client/ClientList.tsx';
 import OneTimeSearch from './pages/OneTimeSearch/OneTimeSearch.tsx';
 import OneTimeSearchResult from './pages/OneTimeSearch/OneTimeSearchResult.tsx';
 import EntityDetails from './pages/Matching/EntityDetails.tsx';
@@ -25,12 +28,14 @@ function App() {
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
-  return loading ? (<Loader />) : (
+  return loading ? (
+    <Loader />
+  ) : (
     <>
       <Routes>
-        <Route path='/' element={<Layout/>}>
+        <Route path='/' element={<Layout />}>
           {/* public routes */}
-          <Route path='login' element={<> <PageTitle title="ARGOS - Login" /> <LogIn /> </>}></Route>
+          <Route path='login' element={<><PageTitle title="ARGOS - Login" /><LogIn /></>} />
 
           {/* private routes */}
           <Route element={<RequireAuth />}>
@@ -40,6 +45,8 @@ function App() {
             <Route path='/one-time-search' element={<> <PageTitle title='ARGOS - Recherche Unique' /> <OneTimeSearch/> </>}></Route>
             <Route path='/one-time-search/:id' element={<> <PageTitle title='ARGOS - Résultat de la recherche' /> <OneTimeSearchResult/> </>}></Route>
             <Route path='/matching/entity/:id' element={<> <PageTitle title={'ARGOS - Détail Gel des Avoirs'}/> <EntityDetails/></>}></Route>
+            <Route path='client/:id' element={<><PageTitle title='ARGOS - CLIENT' /><Client /></>} />
+            <Route path='client/list' element={<><PageTitle title='ARGOS - CLIENT' /><ClientList /></>} />
           </Route>
         </Route>
       </Routes>
