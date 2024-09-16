@@ -12,6 +12,7 @@ import UserList from './pages/User/UserList.tsx';
 import OneTimeSearch from './pages/OneTimeSearch/OneTimeSearch.tsx';
 import OneTimeSearchResult from './pages/OneTimeSearch/OneTimeSearchResult.tsx';
 import EntityDetails from './pages/Matching/EntityDetails.tsx';
+import Client from './pages/Clients/Client.tsx';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -40,6 +41,7 @@ function App() {
             <Route path='/one-time-search' element={<> <PageTitle title='ARGOS - Recherche Unique' /> <OneTimeSearch/> </>}></Route>
             <Route path='/one-time-search/:id' element={<> <PageTitle title='ARGOS - Résultat de la recherche' /> <OneTimeSearchResult/> </>}></Route>
             <Route path='/matching/entity/:id' element={<> <PageTitle title={'ARGOS - Détail Gel des Avoirs'}/> <EntityDetails/></>}></Route>
+            <Route path='/client/:id' element={<> <PageTitle title={'ARGOS - Client'}/> <Client/></>} ></Route>
           </Route>
         </Route>
       </Routes>
