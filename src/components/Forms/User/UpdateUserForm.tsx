@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import SelectGroupDropdown from '../SelectGroupDropdown.tsx';
+import SelectGroupDropdown from '../../Inputs/SelectGroupDropdown.tsx';
 import { useUpdateUserMutation } from '../../../services/user/UserApiSlice.ts';
 import { toast, ToastContainer } from 'react-toastify';
 
