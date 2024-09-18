@@ -7,12 +7,14 @@ import IdentityDocumentForm from './Cards/IdentityDocumentForm.tsx';
 import TextInput from '../../Inputs/TextInput.tsx';
 import LegalPersonForm from './Cards/LegalPersonForm.tsx';
 import VesselPersonForm from './Cards/VesselPersonForm.tsx';
-// import userSix from '../../../images/user/user-06.png';
+import { useState } from 'react';
 
 const clientTypes  = [{value: ClientType.LEGAL , label: 'Moral'}, {value: ClientType.NATURAL, label: 'Physique'}, {value: ClientType.VESSEL, label: 'Navire'}];
 const relationTypes = [{value: RelationType.CLIENT, label: 'Client'}, {value: RelationType.RELATION, label: 'Relation'}, {value: RelationType.PROSPECT, label: 'Prospect'}, {value: RelationType.ARCHIVED, label: 'Archivé'}];
 
 const CreateClientForm = () => {
+  const [clientType, setClientType] = useState<ClientType | ''>('');
+
   // @ts-ignore
   const [createClient] = useCreateClientMutation();
 
@@ -36,7 +38,7 @@ const CreateClientForm = () => {
               Type de Client
             </label>
             <SelectGroupDropdown options={clientTypes} dropdownTitle={'Type de Client'}
-              /* setSelectedOption={}*/ selectedOption={''} />
+              selectedOption={clientType} setSelectedOption={setClientType}/>
           </div>
           <div className="w-full xl:w-1/3">
             <label className="mb-3 block text-sm font-medium text-black dark:text-white">
@@ -48,6 +50,7 @@ const CreateClientForm = () => {
         </div>
       </div>
     </div>
+    {/* Bouton de validation */}
     <div
       className="static left-2 z-30 mx-auto -mt-7.5 h-10 w-full max-w-10 rounded-full bg-primary text-white cursor-pointer hover:bg-opacity-90 p-1 sm:h-12 sm:max-w-12 sm:p-3"
       onClick={handleSubmit}
@@ -72,31 +75,47 @@ const CreateClientForm = () => {
         </svg>
       </label>
     </div>
+
     <div className="mt-4"></div>
-    <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
-      {/* Information's Personne Physique A N'AFFICHER QU'EN CAS DE NATURAL */}
-      <div className="flex flex-col gap-9">
-        <NaturalPersonForm/>
+    {clientType === ClientType.NATURAL ? (<>
+      <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
+        {/* Information's Personne Physique A N'AFFICHER QU'EN CAS DE NATURAL */}
+        <div className="flex flex-col gap-9">
+          <NaturalPersonForm />
+        </div>
+        {/* Information Addresses */}
+        <div className="flex flex-col gap-9">
+          <AddressForm />
+        </div>
       </div>
-      {/* Information Addresses */}
-      <div className="flex flex-col gap-9">
-        <AddressForm/>
+      <div className="mt-4"></div>
+      {/* Informations Pieces d'identité A N'AFFICHER QU'EN CAS DE NATURAL */}
+      <IdentityDocumentForm />
+    </>) : (<></>)}
+    {clientType === ClientType.LEGAL ? (<>
+      <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
+        {/* Informations Personne Morale A N'AFFICHER QU'EN CAS DE MORAL */}
+        <div className="flex flex-col gap-9">
+          <LegalPersonForm />
+        </div>
+        {/* Informations Navire A N'AFFICHER QU'EN CAS DE VESSEL */}
+        <div className="flex flex-col gap-9">
+          <AddressForm />
+        </div>
       </div>
-    </div>
-    <div className="mt-4"></div>
-    {/* Informations Pieces d'identité A N'AFFICHER QU'EN CAS DE NATURAL */}
-    <IdentityDocumentForm/>
-    <div className="mt-4"></div>
-    <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
-      {/* Informations Personne Morale A N'AFFICHER QU'EN CAS DE MORAL */}
-      <div className="flex flex-col gap-9">
-        <LegalPersonForm/>
+    </>) : (<></>)}
+    {clientType === ClientType.VESSEL ? (<>
+      <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
+        {/* Informations Personne Morale A N'AFFICHER QU'EN CAS DE MORAL */}
+        <div className="flex flex-col gap-9">
+          <VesselPersonForm />
+        </div>
+        {/* Informations Navire A N'AFFICHER QU'EN CAS DE VESSEL */}
+        <div className="flex flex-col gap-9">
+          <AddressForm />
+        </div>
       </div>
-      {/* Informations Navire A N'AFFICHER QU'EN CAS DE VESSEL */}
-      <div className="flex flex-col gap-9">
-        <VesselPersonForm/>
-      </div>
-    </div>
+    </>) : (<></>)}
   </div>);
 };
 
