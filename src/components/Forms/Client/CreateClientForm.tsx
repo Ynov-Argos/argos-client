@@ -13,14 +13,79 @@ const clientTypes  = [{value: ClientType.LEGAL , label: 'Moral'}, {value: Client
 const relationTypes = [{value: RelationType.CLIENT, label: 'Client'}, {value: RelationType.RELATION, label: 'Relation'}, {value: RelationType.PROSPECT, label: 'Prospect'}, {value: RelationType.ARCHIVED, label: 'Archivé'}];
 
 const CreateClientForm = () => {
-  const [clientType, setClientType] = useState<ClientType | ''>('');
+  const [clientType, setClientType] = useState<ClientType | undefined>(undefined);
+  const [externalId, setExternalId] = useState<string>('');
+  const [relationType, setRelationType] = useState<RelationType | undefined>(undefined);
+
+  const [naturalPerson, setNaturalPerson] = useState({
+    id: undefined,
+    firstName: undefined,
+    lastName: undefined,
+    birthDate: undefined,
+    birthPlace: undefined,
+    nationalities: [],
+    identityDocuments: []
+  });
+  const [identityDocuments, setIdentityDocuments] = useState({
+    id: undefined,
+    documentType: undefined,
+    documentId: undefined,
+    issueDate: undefined,
+    expirationDate: undefined
+  });
+  const [address, setAddress] = useState({
+    id: undefined,
+    address1: undefined,
+    address2: undefined,
+    zipCode: undefined,
+    city: undefined,
+    country: undefined,
+  });
+  const [legalPerson, setLegalPerson] = useState({
+    id: undefined,
+    name: undefined,
+    juridicalForm: undefined,
+    registrationNumber: undefined,
+    vatNumber: undefined,
+    incorporationDate: undefined,
+    incorporationCountry: undefined
+  });
+  const [vesselPerson, setVesselPerson] = useState({
+    id: undefined,
+    name: undefined,
+    omiNumber: undefined,
+    flag: undefined
+  });
 
   // @ts-ignore
   const [createClient] = useCreateClientMutation();
 
+  const handleExternalIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setExternalId(e.target.value);
+  };
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('submit');
+    console.log('submit', {externalId, clientType, relationType, naturalPerson, legalPerson, vesselPerson, identityDocuments, address});
+    if (clientType === ClientType.NATURAL) {
+      naturalPerson.identityDocuments = identityDocuments.documentId ? [identityDocuments] : [];
+      const createAddress = address.address1 ? [address] : [];
+      const res = await createClient({externalId, type: clientType, relationType, natural: naturalPerson, addresses: createAddress});
+      console.log('res', res);
+    }
+    if (clientType === ClientType.LEGAL) {
+      const createAddress = address.address1 ? [address] : [];
+      const res = await createClient({externalId, type: clientType, relationType, legal: legalPerson, addresses: createAddress});
+      console.log('res', res);
+    }
+
+    if (clientType === ClientType.VESSEL) {
+      const createAddress = address.address1 ? [address] : [];
+      const res = await createClient({externalId, type: clientType, relationType, vessel: vesselPerson, addresses: createAddress});
+      console.log('res', res);
+    }
   }
 
   return (<div className="flex flex-col gap9">
@@ -30,7 +95,7 @@ const CreateClientForm = () => {
       <div className="p-6.5">
         <div className="mb-5 flex flex-col gap-6 xl:flex-row">
           <div className="w-full xl:w-1/3">
-            <TextInput value={''} label={'Identificateur Externe'} placeHolder={'Identificateur Externe'} /*setValue={}*/ />
+            <TextInput value={externalId} label={'Identificateur Externe'} placeHolder={'Identificateur Externe'} handleChange={handleExternalIdChange} targetName={'externalId'} />
           </div>
 
           <div className="w-full xl:w-1/3">
@@ -38,14 +103,14 @@ const CreateClientForm = () => {
               Type de Client
             </label>
             <SelectGroupDropdown options={clientTypes} dropdownTitle={'Type de Client'}
-              selectedOption={clientType} setSelectedOption={setClientType}/>
+              selectedOption={clientType || ''} setSelectedOption={setClientType}/>
           </div>
           <div className="w-full xl:w-1/3">
             <label className="mb-3 block text-sm font-medium text-black dark:text-white">
               Type de Relation
             </label>
             <SelectGroupDropdown options={relationTypes} dropdownTitle={'Type de Relation'}
-              /* setSelectedOption={}*/ selectedOption={''} />
+                                 setSelectedOption={setRelationType} selectedOption={relationType || ''} />
           </div>
         </div>
       </div>
@@ -79,28 +144,25 @@ const CreateClientForm = () => {
     <div className="mt-4"></div>
     {clientType === ClientType.NATURAL ? (<>
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
-        {/* Information's Personne Physique A N'AFFICHER QU'EN CAS DE NATURAL */}
         <div className="flex flex-col gap-9">
-          <NaturalPersonForm />
+          <NaturalPersonForm data={naturalPerson} setData={setNaturalPerson} />
+          <IdentityDocumentForm data={identityDocuments} setData={setIdentityDocuments}/>
         </div>
         {/* Information Addresses */}
         <div className="flex flex-col gap-9">
-          <AddressForm />
+          <AddressForm data={address} setData={setAddress}/>
         </div>
       </div>
-      <div className="mt-4"></div>
-      {/* Informations Pieces d'identité A N'AFFICHER QU'EN CAS DE NATURAL */}
-      <IdentityDocumentForm />
     </>) : (<></>)}
     {clientType === ClientType.LEGAL ? (<>
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
         {/* Informations Personne Morale A N'AFFICHER QU'EN CAS DE MORAL */}
         <div className="flex flex-col gap-9">
-          <LegalPersonForm />
+          <LegalPersonForm data={legalPerson} setData={setLegalPerson}/>
         </div>
         {/* Informations Navire A N'AFFICHER QU'EN CAS DE VESSEL */}
         <div className="flex flex-col gap-9">
-          <AddressForm />
+          <AddressForm data={address} setData={setAddress}/>
         </div>
       </div>
     </>) : (<></>)}
@@ -108,11 +170,11 @@ const CreateClientForm = () => {
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
         {/* Informations Personne Morale A N'AFFICHER QU'EN CAS DE MORAL */}
         <div className="flex flex-col gap-9">
-          <VesselPersonForm />
+          <VesselPersonForm data={vesselPerson} setData={setVesselPerson} />
         </div>
         {/* Informations Navire A N'AFFICHER QU'EN CAS DE VESSEL */}
         <div className="flex flex-col gap-9">
-          <AddressForm />
+          <AddressForm data={address} setData={setAddress}/>
         </div>
       </div>
     </>) : (<></>)}
