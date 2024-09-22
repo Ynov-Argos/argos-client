@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import SelectGroupDropdown from '../SelectGroupDropdown.tsx';
+import SelectGroupDropdown from '../../Inputs/SelectGroupDropdown.tsx';
 import { useCreateUserMutation } from '../../../services/user/UserApiSlice.ts';
 
 const CreateUserForm: React.FC = () => {

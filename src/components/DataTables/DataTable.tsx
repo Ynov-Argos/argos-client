@@ -123,7 +123,7 @@ const DataTable = (props: Props) => {
         {page.map((row, key) => {
           prepareRow(row);
           return (
-            <tr {...row.getRowProps()} key={key} onClick={() => props.handleOnClick(row.original)}>
+            <tr {...row.getRowProps()} key={key} onClick={() => props.handleOnClick(row.original)} className='cursor-pointer'>
               {row.cells.map((cell, key) => {
                 return (
                   <td {...cell.getCellProps()} key={key}>
@@ -137,7 +137,7 @@ const DataTable = (props: Props) => {
         </tbody>
       </table>
 
-      <div className="flex justify-between border-t border-stroke px-8 pt-5 dark:border-strokedark">
+      <div className="flex justify-between cursor-pointer border-t border-stroke px-8 pt-5 dark:border-strokedark">
         <p className="font-medium">
           Showing {pageIndex + 1} 0f {pageOptions.length} pages
         </p>

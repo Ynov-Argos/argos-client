@@ -2,8 +2,8 @@ export interface IdentityDocument {
   id: string;
   documentType: DocumentType;
   documentId: string;
-  issueDate?: Date;
-  expirationDate?: Date;
+  issueDate?: string;
+  expirationDate?: string;
 }
 
 export interface Address {
@@ -12,7 +12,7 @@ export interface Address {
   address2?: string;
   city: string;
   state?: string;
-  zipCode: string;
+  zipCode?: string;
   country: string;
 }
 
@@ -20,35 +20,35 @@ export interface ClientLegal {
   id: string;
   name: string;
   juridicalForm: string;
-  registrationNumber: string;
-  vatNumber: string;
-  incorporationDate: Date;
-  incorporationCountry: string;
+  registrationNumber?: string;
+  vatNumber?: string;
+  incorporationDate?: string;
+  incorporationCountry?: string;
 }
 
 export interface ClientVessel {
   id: string;
   name: string;
   omiNumber: string;
-  flag: string;
+  flag?: string;
 }
 
 export interface ClientNatural {
   id: string;
   firstName: string;
   lastName: string;
-  birthDate: Date;
-  birthPlace: string;
+  birthDate?: string;
+  birthPlace?: string;
   nationalities: string[];
   identityDocuments: IdentityDocument[];
 }
 
 export interface Client {
-  id: string;
+  id?: string;
   externalId?: string;
   type: ClientType;
   relationType: RelationType;
-  name: string;
+  name?: string;
   natural?: ClientNatural;
   legal?: ClientLegal;
   vessel?: ClientVessel;

@@ -150,7 +150,28 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
               CLIENTS
             </h3>
-            <ul className="mb-6 flex flex-col gap-1.5"></ul>
+            <ul className="mb-6 flex flex-col gap-1.5">
+              <li>
+                <NavLink
+                  to="/client/:NEW-CLIENT"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('one-time-search') && 'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  Nouveau client
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/client/list"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('one-time-search') && 'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  Liste des clients
+                </NavLink>
+              </li>
+            </ul>
           </div>
 
           {/* <!-- Matching Group --> */}

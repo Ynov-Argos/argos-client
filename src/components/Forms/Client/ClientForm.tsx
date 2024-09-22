@@ -1,9 +1,9 @@
 import CreateClientForm from './CreateClientForm.tsx';
 import UpdateClientForm from './UpdateClientForm.tsx';
 
-import Client from '../../../pages/Clients/Client.tsx';
+import { Client } from '../../../services/client/client.entity.ts';
 
-type ClientFormProps = { isNewClient: boolean; client: typeof Client | undefined };
+type ClientFormProps = { isNewClient: boolean; client: Client | undefined };
 
 const ClientForm = (props: ClientFormProps) => {
 

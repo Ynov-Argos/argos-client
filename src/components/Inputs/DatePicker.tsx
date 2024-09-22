@@ -1,7 +1,19 @@
 import flatpickr from 'flatpickr';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
-const DatePicker = ({value, setValue, label}) => {
+type DatePickerProps = {
+  value: string;
+  label: string;
+  setSelectedValue: (date: string) => void;
+};
+
+const DatePicker: React.FC<DatePickerProps> = ({ value, label, setSelectedValue }) => {
+  const handleChanges = (date: string) => {
+    console.log('DATEPICKER', date);
+    console.log('date', date);
+    setSelectedValue(date);
+  };
+
   useEffect(() => {
     // Init flatpickr
     flatpickr('.form-datepicker', {
@@ -13,10 +25,11 @@ const DatePicker = ({value, setValue, label}) => {
         '<svg className="fill-current" width="7" height="11" viewBox="0 0 7 11"><path d="M5.4 10.8l1.4-1.4-4-4 4-4L5.4 0 0 5.4z" /></svg>',
       nextArrow:
         '<svg className="fill-current" width="7" height="11" viewBox="0 0 7 11"><path d="M1.4 10.8L0 9.4l4-4-4-4L1.4 0l5.4 5.4z" /></svg>',
+      onChange: function (_selectedDates, dateStr) {
+        handleChanges(dateStr);
+      },
     });
-
-
-  }, []);
+  }, [value, setSelectedValue]);
 
   return (
     <div>
@@ -25,13 +38,13 @@ const DatePicker = ({value, setValue, label}) => {
       </label>
       <div className="relative">
         <input
+          type="text"
           className="form-datepicker w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
           placeholder="DD/MM/YYYY"
           data-class="flatpickr-right"
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => setSelectedValue(e.target.value)}
         />
-
         <div className="pointer-events-none absolute inset-0 left-auto right-5 flex items-center">
           <svg
             width="18"

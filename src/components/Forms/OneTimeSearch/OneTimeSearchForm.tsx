@@ -1,4 +1,4 @@
-import SelectGroupDropdown from '../SelectGroupDropdown.tsx';
+import SelectGroupDropdown from '../../Inputs/SelectGroupDropdown.tsx';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {

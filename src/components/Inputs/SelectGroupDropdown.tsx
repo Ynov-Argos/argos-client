@@ -1,22 +1,33 @@
 import React, { useState } from 'react';
 
-const SelectGroupDropdown: React.FC<any> = ({ dropdownTitle, options, setSelectedOption, selectedOption }) => {
+type SelectGroupDropdownProps = {
+  dropdownTitle: string;
+  options: any[];
+  setSelectedOption: any;
+  selectedOption: string;
+  readOnly?: boolean;
+};
+
+const SelectGroupDropdown: React.FC<SelectGroupDropdownProps> = ({ dropdownTitle, options, setSelectedOption, selectedOption, readOnly }) => {
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
 
   const changeTextColor = () => {
     setIsOptionSelected(true);
   };
 
+  const handleChanges = (e) => {
+    setSelectedOption(e.target.value);
+    changeTextColor();
+  };
+
   return (
 
     <div className="relative z-20 bg-transparent dark:bg-form-input">
       <select
+        disabled={readOnly || false}
         value={selectedOption}
-        onChange={(e) => {
-          setSelectedOption(e.target.value);
-          changeTextColor();
-        }}
-        className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent px-5 py-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary ${
+        onChange={handleChanges}
+        className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent px-5 py-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary disabled:cursor-default disabled:bg-whiter ${
           isOptionSelected ? 'text-black dark:text-white' : ''
         }`}
       >
