@@ -1,9 +1,24 @@
 import SelectGroupDropdown from '../../../Inputs/SelectGroupDropdown.tsx';
-import DatePicker from '../../../Inputs/DatePicker.tsx';
-import { ClientType } from '../../../../services/client/client.entity.ts';
 import TextInput from '../../../Inputs/TextInput.tsx';
 
-const juridicalForms  = [{value: ClientType.LEGAL , label: 'Moral'}, {value: ClientType.NATURAL, label: 'Physique'}, {value: ClientType.VESSEL, label: 'Navire'}];
+const juridicalForms = [
+  { "value": "SA", "label": "SA" },
+  { "value": "SARL", "label": "SARL" },
+  { "value": "SAS", "label": "SAS" },
+  { "value": "SASU", "label": "SASU" },
+  { "value": "SCI", "label": "SCI" },
+  { "value": "EURL", "label": "EURL" },
+  { "value": "SNC", "label": "SNC" },
+  { "value": "SCOP", "label": "SCOP" },
+  { "value": "SCA", "label": "SCA" },
+  { "value": "SCS", "label": "SCS" },
+  { "value": "SELARL", "label": "SELARL" },
+  { "value": "SELAS", "label": "SELAS" },
+  { "value": "SCP", "label": "SCP" },
+  { "value": "GIE", "label": "GIE" },
+  { "value": "EI", "label": "EI" },
+  { "value": "EIRL", "label": "EIRL" }
+]
 type LegalPersonFormProps = {
   data: {
     id: string;
@@ -22,10 +37,6 @@ const LegalPersonForm: React.FC<LegalPersonFormProps> = ({data, setData}) => {
   const setJuridicalForm = (juridicalForm: string) => {
     setData({...data, juridicalForm});
   };
-
-  const setValue = (value: string) => {
-    console.log(value);
-  }
 
   const handleChange = (e) => {
     setData({...data, [e.target.name]: e.target.value});
@@ -56,9 +67,6 @@ const LegalPersonForm: React.FC<LegalPersonFormProps> = ({data, setData}) => {
           </div>
         </div>
         <div className="mb-5 flex flex-col gap-6 xl:flex-row">
-          <div className="w-full xl:w-1/2">
-            <DatePicker label={'Date de Création'} value={data.incorporationDate} setValue={setValue} />
-          </div>
           {/*TODO REFACTO MULTISELECT TO ACCEPT STRING INSTEAD NUMBER FOR INDEX*/}
           <div className="w-full xl:w-1/2">
             <TextInput value={data.incorporationCountry} label={'Pays de Création'} placeHolder={'Pays de Création'} handleChange={handleChange} targetName={'incorporationCountry'} />

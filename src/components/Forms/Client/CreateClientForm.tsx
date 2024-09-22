@@ -7,14 +7,16 @@ import IdentityDocumentForm from './Cards/IdentityDocumentForm.tsx';
 import TextInput from '../../Inputs/TextInput.tsx';
 import LegalPersonForm from './Cards/LegalPersonForm.tsx';
 import VesselPersonForm from './Cards/VesselPersonForm.tsx';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const clientTypes  = [{value: ClientType.LEGAL , label: 'Moral'}, {value: ClientType.NATURAL, label: 'Physique'}, {value: ClientType.VESSEL, label: 'Navire'}];
 const relationTypes = [{value: RelationType.CLIENT, label: 'Client'}, {value: RelationType.RELATION, label: 'Relation'}, {value: RelationType.PROSPECT, label: 'Prospect'}, {value: RelationType.ARCHIVED, label: 'Archivé'}];
 
 const CreateClientForm = () => {
   const [clientType, setClientType] = useState<ClientType | undefined>(undefined);
-  const [externalId, setExternalId] = useState<string>('');
+  const [externalId, setExternalId] = useState<string | undefined>(undefined);
   const [relationType, setRelationType] = useState<RelationType | undefined>(undefined);
 
   const [naturalPerson, setNaturalPerson] = useState({
@@ -56,6 +58,7 @@ const CreateClientForm = () => {
     omiNumber: undefined,
     flag: undefined
   });
+  const navigate = useNavigate();
 
   // @ts-ignore
   const [createClient] = useCreateClientMutation();
@@ -68,24 +71,60 @@ const CreateClientForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('submit', {externalId, clientType, relationType, naturalPerson, legalPerson, vesselPerson, identityDocuments, address});
+    if (!clientType) {
+      toast.warning('Veuillez sélectionner un type de client');
+      return;
+    }
+    if (!relationType) {
+      toast.warning('Veuillez sélectionner un type de relation');
+      return;
+    }
     if (clientType === ClientType.NATURAL) {
       naturalPerson.identityDocuments = identityDocuments.documentId ? [identityDocuments] : [];
       const createAddress = address.address1 ? [address] : [];
       const res = await createClient({externalId, type: clientType, relationType, natural: naturalPerson, addresses: createAddress});
-      console.log('res', res);
+      if (res.error) {
+        // @ts-ignore
+        toast.error(`Erreur: ${res.error.data.error} - ${res.error.data.statusCode} - ${res.error.data.message}`);
+        return
+      }
+      if (res.data) {
+        toast.success('Client créé avec succès');
+        console.log(res.data);
+        navigate(`/client/${res.data.id}`);
+        return;
+      }
     }
     if (clientType === ClientType.LEGAL) {
       const createAddress = address.address1 ? [address] : [];
       const res = await createClient({externalId, type: clientType, relationType, legal: legalPerson, addresses: createAddress});
-      console.log('res', res);
+      if (res.error) {
+        // @ts-ignore
+        toast.error(`Erreur: ${res.error?.data.error} - ${res.error?.data.statusCode} - ${res.error?.data.message}`);
+        return;
+      }
+      if (res.data) {
+        toast.success('Client créé avec succès');
+        navigate(`/client/${res.data.id}`);
+        return;
+      }
     }
 
     if (clientType === ClientType.VESSEL) {
       const createAddress = address.address1 ? [address] : [];
       const res = await createClient({externalId, type: clientType, relationType, vessel: vesselPerson, addresses: createAddress});
-      console.log('res', res);
+      if (res.error) {
+        // @ts-ignore
+        toast.error(`Erreur: ${res.error.data.error} - ${res.error.data.statusCode} - ${res.error.data.message}`);
+        return
+      }
+      if (res.data) {
+        toast.success('Client créé avec succès');
+        navigate(`/client/${res.data.id}`);
+        return;
+      }
     }
+    toast.warning('Veuillez choisir un type de client');
   }
 
   return (<div className="flex flex-col gap9">
@@ -95,7 +134,7 @@ const CreateClientForm = () => {
       <div className="p-6.5">
         <div className="mb-5 flex flex-col gap-6 xl:flex-row">
           <div className="w-full xl:w-1/3">
-            <TextInput value={externalId} label={'Identificateur Externe'} placeHolder={'Identificateur Externe'} handleChange={handleExternalIdChange} targetName={'externalId'} />
+            <TextInput value={externalId || ''} label={'Identificateur Externe'} placeHolder={'Identificateur Externe'} handleChange={handleExternalIdChange} targetName={'externalId'} />
           </div>
 
           <div className="w-full xl:w-1/3">
@@ -178,6 +217,7 @@ const CreateClientForm = () => {
         </div>
       </div>
     </>) : (<></>)}
+    <ToastContainer/>
   </div>);
 };
 
