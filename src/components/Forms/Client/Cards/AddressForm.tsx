@@ -1,8 +1,4 @@
 import TextInput from '../../../Inputs/TextInput.tsx';
-import SelectGroupDropdown from '../../../Inputs/SelectGroupDropdown.tsx';
-import { useState } from 'react';
-
-const countries = [{value: 'FRANCE', label: 'France'}, {value: 'SPAIN', label: 'Espagne'}];
 
 type AddressFormProps = {
   data: {
@@ -17,7 +13,6 @@ type AddressFormProps = {
 };
 
 const AddressForm: React.FC<AddressFormProps> = ({data, setData}) => {
-  const [country, setCountry] = useState<string>(data.country);
   const handleChange = (e) => { setData({...data, [e.target.name]: e.target.value});};
   return (<>
     <div
@@ -47,12 +42,7 @@ const AddressForm: React.FC<AddressFormProps> = ({data, setData}) => {
         </div>
         <div className="mb-5 flex flex-col gap-6 xl:flex-row">
           <div className="w-full">
-            {/*TODO REFACTO MULTISELECT TO ACCEPT STRING INSTEAD NUMBER FOR INDEX*/}
-            <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-              Pays
-            </label>
-            <SelectGroupDropdown options={countries} dropdownTitle={'Type de Client'}
-                                 selectedOption={country} setSelectedOption={setCountry}/>
+            <TextInput value={data.country} label={'Pays'} placeHolder={'Pays'} targetName={'country'} handleChange={handleChange}/>
           </div>
         </div>
       </div>

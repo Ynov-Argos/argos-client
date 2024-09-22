@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
 
-const SelectGroupDropdown: React.FC<any> = ({ dropdownTitle, options, setSelectedOption, selectedOption }) => {
+type SelectGroupDropdownProps = {
+  dropdownTitle: string;
+  options: any[];
+  setSelectedOption: any;
+  selectedOption: string;
+  readOnly?: boolean;
+};
+
+const SelectGroupDropdown: React.FC<SelectGroupDropdownProps> = ({ dropdownTitle, options, setSelectedOption, selectedOption, readOnly }) => {
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
 
   const changeTextColor = () => {
@@ -16,9 +24,10 @@ const SelectGroupDropdown: React.FC<any> = ({ dropdownTitle, options, setSelecte
 
     <div className="relative z-20 bg-transparent dark:bg-form-input">
       <select
+        disabled={readOnly || false}
         value={selectedOption}
         onChange={handleChanges}
-        className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent px-5 py-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary ${
+        className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent px-5 py-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary disabled:cursor-default disabled:bg-whiter ${
           isOptionSelected ? 'text-black dark:text-white' : ''
         }`}
       >

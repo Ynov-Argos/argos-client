@@ -1,10 +1,20 @@
+import React from 'react';
 
-const TextInput = ({value, handleChange, label, placeHolder, targetName}) => {
+type TextInputProps = {
+  value: any;
+  handleChange?: any;
+  label: string;
+  placeHolder: string;
+  targetName: string;
+  readOnly?: boolean;
+}
+const TextInput: React.FC<TextInputProps> = ({value, handleChange, label, placeHolder, targetName, readOnly}) => {
   return (<>
     <label className="mb-3 block text-sm font-medium text-black dark:text-white">
       {label}
     </label>
     <input
+      disabled={readOnly || false}
       type="text"
       name={targetName}
       placeholder={placeHolder}
