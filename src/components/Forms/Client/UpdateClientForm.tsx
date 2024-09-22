@@ -71,6 +71,9 @@ const UpdateClientForm = (props: { client: Client }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const addressUpdate = address.address1 ? [address] : [];
+    const updateIdentityDocuments = identityDocuments.documentId ? [identityDocuments] : [];
+
     const naturalUpdate = {
       id: natural.id,
       firstName: natural.firstName,
@@ -78,8 +81,8 @@ const UpdateClientForm = (props: { client: Client }) => {
       birthDate: natural.birthDate,
       birthPlace: natural.birthPlace,
       nationalities: natural.nationalities,
-      identityDocuments: [identityDocuments]
-    }
+      identityDocuments: updateIdentityDocuments
+    };
     const clientToUpdate = {
       id: props.client.id,
       externalId: externalId,
@@ -88,7 +91,7 @@ const UpdateClientForm = (props: { client: Client }) => {
       natural: clientType === ClientType.NATURAL ? naturalUpdate : undefined,
       legal: clientType === ClientType.LEGAL ? legal : undefined,
       vessel: clientType === ClientType.VESSEL ? vessel : undefined,
-      addresses: [address]
+      addresses: addressUpdate
     };
 
     console.log(clientToUpdate);
