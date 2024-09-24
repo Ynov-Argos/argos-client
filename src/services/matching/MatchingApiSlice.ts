@@ -40,6 +40,12 @@ export const matchingApiSlice = apiSlice.injectEndpoints({
         method: 'GET',
       }),
     }),
+    getMatchingWorkflowList: builder.query({
+      query: () => ({
+        url: '/matching/workflows',
+        method: 'GET',
+      }),
+    }),
     setMatchQualification: builder.mutation({
       query: (data: { workflowId: string, matchId: string, qualification: string }) => ({
         url: `/matching/workflows/${data.workflowId}/match/${data.matchId}/${data.qualification}`,
@@ -56,5 +62,6 @@ export const {
   useGetEntityQuery,
   useGetEntityOnDemandMutation,
   useGetMatchingWorkflowByClientQuery,
+  useGetMatchingWorkflowListQuery,
   useSetMatchQualificationMutation,
 } = matchingApiSlice;
