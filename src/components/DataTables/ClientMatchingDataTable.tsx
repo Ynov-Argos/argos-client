@@ -12,9 +12,10 @@ type Props = {
   column : {Header: string, accessor: string}[]
   rows: any[]
   matchingInfo: {status: string, total: number}
+  onClick: (row: any) => void
 };
 
-const ClientMatchingDataTable: React.FC<Props> = ({column, rows, matchingInfo}) => {
+const ClientMatchingDataTable: React.FC<Props> = ({column, rows, matchingInfo, onClick}) => {
   const columns = useMemo(() => column, []);
   const data = useMemo(() => rows, []);
   const defaultColumn = useMemo(() => {
@@ -73,7 +74,7 @@ const ClientMatchingDataTable: React.FC<Props> = ({column, rows, matchingInfo}) 
               </option>
             ))}
           </select>
-          <p className="pl-2 text-black dark:text-white">Entries Per Page</p>
+          <p className="pl-2 text-black dark:text-white">Entités Par Page</p>
         </div>
       </div>
 
@@ -143,11 +144,49 @@ const ClientMatchingDataTable: React.FC<Props> = ({column, rows, matchingInfo}) 
               key={key}
             >
               {row.cells.map((cell, key) => {
-                return (
-                  <td {...cell.getCellProps()} key={key}>
-                    {cell.render('Cell')}
-                  </td>
-                );
+                // console.log(cell);
+                if (cell.column.id === 'name') {
+                  const value = cell.value;
+                  const truncatedValue = value.length > 25 ? value.substring(0, 25) + '...' : value;
+                  return (
+                    <td {...cell.getCellProps()} key={key}>
+                      <div className="flex items-center">
+                        <div className="group relative inline-block">
+                          <span className="cursor-pointer" onClick={() => onClick(row.original)}> {truncatedValue}</span>
+                          {value.length > 25 ? (
+                            <div
+                              className="absolute bottom-full left-1/2 z-20 mb-3 -translate-x-1/2 whitespace-nowrap rounded bg-black px-4.5 py-1.5 text-sm font-medium text-white opacity-0 group-hover:opacity-100">
+                          <span
+                            className="absolute bottom-[-3px] left-1/2 -z-10 h-2 w-2 -translate-x-1/2 rotate-45 rounded-sm bg-black"></span>
+                              {value}
+                            </div>
+                          ) : (<></>)}
+                        </div>
+                        <button className="ml-2" onClick={() => onClick(row.original)}>
+                          <svg
+                            className="fill-current"
+                            width="18"
+                            height="18"
+                            viewBox="0 0 18 18"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                          <path
+                              d="M12.1777 16.1156C12.009 16.1156 11.8402 16.0593 11.7277 15.9187L5.37148 9.44995C5.11836 9.19683 5.11836 8.80308 5.37148 8.54995L11.7277 2.0812C11.9809 1.82808 12.3746 1.82808 12.6277 2.0812C12.8809 2.33433 12.8809 2.72808 12.6277 2.9812L6.72148 8.99995L12.6559 15.0187C12.909 15.2718 12.909 15.6656 12.6559 15.9187C12.4871 16.0312 12.3465 16.1156 12.1777 16.1156Z"
+                              fill=""
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    </td>
+                  );
+                } else {
+                  return (
+                    <td {...cell.getCellProps()} key={key}>
+                      {cell.render('Cell')}
+                    </td>
+                  );
+                }
               })}
             </tr>
           );
@@ -212,7 +251,7 @@ const ClientMatchingDataTable: React.FC<Props> = ({column, rows, matchingInfo}) 
           </button>
         </div>
         <p className="font-medium">
-          Showing {pageIndex + 1} 0f {pageOptions.length} pages
+          {pageIndex + 1} / {pageOptions.length} Pages
         </p>
       </div>
     </section>

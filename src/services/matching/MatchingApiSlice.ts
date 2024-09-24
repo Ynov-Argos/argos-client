@@ -28,10 +28,22 @@ export const matchingApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 1000 * 60 * 5, // 5 minutes
     }),
+    getEntityOnDemand: builder.mutation({
+      query: (entityId: string) => ({
+        url: `/matching/entity/${entityId}`,
+        method: 'GET',
+      }),
+    }),
     getMatchingWorkflowByClient: builder.query({
       query: (clientId: string) => ({
         url: `/matching/workflows/${clientId}`,
         method: 'GET',
+      }),
+    }),
+    setMatchQualification: builder.mutation({
+      query: (data: { workflowId: string, matchId: string, qualification: string }) => ({
+        url: `/matching/workflows/${data.workflowId}/match/${data.matchId}/${data.qualification}`,
+        method: 'PUT',
       }),
     }),
   }),
@@ -42,5 +54,7 @@ export const {
   useGetOneTimeSearchesQuery,
   useGetOneTimeSearchResultQuery,
   useGetEntityQuery,
+  useGetEntityOnDemandMutation,
   useGetMatchingWorkflowByClientQuery,
+  useSetMatchQualificationMutation,
 } = matchingApiSlice;
