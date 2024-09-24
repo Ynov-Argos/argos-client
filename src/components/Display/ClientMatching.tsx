@@ -13,8 +13,14 @@ const columns = [
   { Header: 'Statut', accessor: 'status' }
 ]
 
+const clientMatchStatus = [{value: 'PENDING_QUALIFICATION', label: 'EN ATTENTE DE QUALIFICATION'}, {value: 'VERIFIED', label: 'VÉRIFIÉ'}, {value: 'CLEARED', label: 'FAUX POSITIF'}];
+
 const ClientMatching: React.FC<ClientMatchingProps> = ({clientID}) => {
   const { data: workflow, isLoading, error } = useGetMatchingWorkflowByClientQuery(clientID);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   if (error || !workflow) {
     // @ts-ignore
@@ -30,11 +36,11 @@ const ClientMatching: React.FC<ClientMatchingProps> = ({clientID}) => {
       name: match.data.nature === 'NATURAL' ? `${match.data.natural.firstName} ${match.data.name}` : match.data.name,
       detectionDate: moment(match.detectionDate, 'YYYY-MM-DDTHH:mm:ss.sssZ.').format('DD/MM/YYYY'),
       decisionDate: !match.decisionDate || moment(match.decisionDate, 'YYYY-MM-DDTHH:mm:ss.sssZ.').format('DD/MM/YYYY') ,
-      status: match.status
+      status: clientMatchStatus.find((status) => status.value === match.status)?.label || ''
     }
   });
 
-  return isLoading ? (<Loader/>) : (
+  return (
     <div>
       <ClientMatchingDataTable column={columns} rows={rows} matchingInfo={{status: workflow?.status, total: workflow?.totalMatches}}/>
     </div>
