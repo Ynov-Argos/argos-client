@@ -21,6 +21,7 @@ const User: React.FC = () => {
     if (isError) {
       // @ts-ignore
       if (error.data.statusCode === 404) {
+        console.log('User not found');
         setIsNewUser(true);
       }
     } else if (isSuccess) {

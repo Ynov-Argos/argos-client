@@ -3,7 +3,7 @@ import DefaultLayout from '../../layout/DefaultLayout.tsx';
 import OneTimeSearchForm from '../../components/Forms/OneTimeSearch/OneTimeSearchForm.tsx';
 import { ToastContainer} from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { useGetOneTimeSearchsQuery } from '../../services/matching/MatchingApiSlice.ts';
+import { useGetOneTimeSearchesQuery } from '../../services/matching/MatchingApiSlice.ts';
 import DataTable from '../../components/DataTables/DataTable.tsx';
 import Loader from '../../common/Loader';
 
@@ -11,7 +11,7 @@ const OneTimeSearch: React.FC = () => {
   const navigate = useNavigate();
 
   // @ts-ignore
-  const { data: searchResult, isLoading } = useGetOneTimeSearchsQuery();
+  const { data: searchResult, isLoading } = useGetOneTimeSearchesQuery();
 
   const dateFormater = (date: string) => {
     return new Date(date).toLocaleDateString('fr-FR', {});

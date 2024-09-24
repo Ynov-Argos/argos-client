@@ -11,6 +11,7 @@ import AddressForm from './Cards/AddressForm.tsx';
 import LegalPersonForm from './Cards/LegalPersonForm.tsx';
 import VesselPersonForm from './Cards/VesselPersonForm.tsx';
 import { toast, ToastContainer } from 'react-toastify';
+import ClientMatching from '../../Display/Matching/ClientMatching.tsx';
 
 const clientTypes  = [{value: ClientType.LEGAL , label: 'Moral'}, {value: ClientType.NATURAL, label: 'Physique'}, {value: ClientType.VESSEL, label: 'Navire'}];
 const relationTypes = [{value: RelationType.CLIENT, label: 'Client'}, {value: RelationType.RELATION, label: 'Relation'}, {value: RelationType.PROSPECT, label: 'Prospect'}, {value: RelationType.ARCHIVED, label: 'Archivé'}];
@@ -202,6 +203,11 @@ const UpdateClientForm = (props: { client: Client }) => {
         </div>
       </div>
     </>) : (<></>)}
+
+    <div className="mt-4"></div>
+    {/* Matching Datatable */}
+    <ClientMatching clientID={props.client.id}></ClientMatching>
+    {/* Toast */}
     <ToastContainer />
   </div>);
 };
