@@ -2,6 +2,8 @@ import React from 'react';
 import { useGetMatchingWorkflowByClientQuery } from '../../services/matching/MatchingApiSlice.ts';
 import Loader from '../../common/Loader';
 import ClientMatchingDataTable from '../DataTables/ClientMatchingDataTable.tsx';
+import moment from 'moment';
+
 type ClientMatchingProps = { clientID: string; };
 
 const columns = [
@@ -12,19 +14,25 @@ const columns = [
 ]
 
 const ClientMatching: React.FC<ClientMatchingProps> = ({clientID}) => {
-  const { data: workflow, isLoading } = useGetMatchingWorkflowByClientQuery(clientID);
+  const { data: workflow, isLoading, error } = useGetMatchingWorkflowByClientQuery(clientID);
+
+  if (error || !workflow) {
+    // @ts-ignore
+    if (error?.data.statusCode === 404) {
+      return <div>Aucun workflow de matching trouvé pour ce client</div>;
+    }
+    return <div>Erreur lors de la récupération des données</div>;
+  }
 
   const rows = workflow?.matches?.map((match) => {
     return {
       id: match.id,
       name: match.data.nature === 'NATURAL' ? `${match.data.natural.firstName} ${match.data.name}` : match.data.name,
-      detectionDate: match.detectionDate,
-      decisionDate: match.decisionDate,
+      detectionDate: moment(match.detectionDate, 'YYYY-MM-DDTHH:mm:ss.sssZ.').format('DD/MM/YYYY'),
+      decisionDate: !match.decisionDate || moment(match.decisionDate, 'YYYY-MM-DDTHH:mm:ss.sssZ.').format('DD/MM/YYYY') ,
       status: match.status
     }
   });
-
-  console.log(rows);
 
   return isLoading ? (<Loader/>) : (
     <div>
