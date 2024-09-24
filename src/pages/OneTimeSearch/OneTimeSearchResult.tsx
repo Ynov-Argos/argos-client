@@ -116,6 +116,7 @@ const OneTimeSearchResult: React.FC = () => {
 
   const handleOnClick = async (row) => {
     const { data: entity } = await getEntity(row.registreId);
+    console.log(entity);
     setModalData(entity);
     setModalOpen(!modalOpen)
   };
@@ -175,6 +176,7 @@ const OneTimeSearchResult: React.FC = () => {
             <h3
               className="pb-2 text-center text-xl font-bold text-black dark:text-white sm:text-2xl">
               {modalData?.nature === 'NATURAL' ? `${modalData?.natural?.firstName} ${modalData?.name}` : modalData?.name}
+              {modalData?.EUReference ? ` - ${modalData?.EUReference}` : ''} {modalData?.UNReference ? ` - ${modalData?.UNReference}` : ''}
             </h3>
             <span className="mx-auto mb-6 inline-block h-1 w-3/6 rounded bg-primary"></span>
           </div>

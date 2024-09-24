@@ -11,7 +11,7 @@ import ColumnFilter from './ColumnFilter';
 type Props = {
   column : {Header: string, accessor: string}[]
   rows: any[]
-  matchingInfo: {status: string, total: number}
+  matchingInfo: {status: string, total: string}
   onClick: (row: any) => void
 };
 

@@ -130,7 +130,7 @@ const ClientMatching: React.FC<ClientMatchingProps> = ({clientID}) => {
                                rows={rows}
                                matchingInfo={{
                                  status: workflowStatus.find(value => value.value === workflow?.status)?.label || workflow?.status,
-                                 total: workflow?.totalMatches }}
+                                 total: `${workflow?.matchesCompleted}/${workflow?.totalMatches}` }}
                                onClick={clientNameOnClick} />
 
 
@@ -148,6 +148,7 @@ const ClientMatching: React.FC<ClientMatchingProps> = ({clientID}) => {
           <div className="text-center">
             <h3 className="pb-2 text-center text-xl font-bold text-black dark:text-white sm:text-2xl">
               {modalData?.nature === 'NATURAL' ? `${modalData?.natural?.firstName} ${modalData?.name}` : modalData?.name}
+              {modalData?.EUReference ? `- ${modalData?.EUReference}` : ''} {modalData?.UNReference ? `- ${modalData?.UNReference}` : ''}
             </h3>
             <span className="mx-auto mb-6 inline-block h-1 w-3/6 rounded bg-primary"></span>
           </div>
